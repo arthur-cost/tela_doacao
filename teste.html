@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doação - Mãos que Ajudam</title>
+    <link rel="stylesheet" href="teste.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Você está doando para</h1>
+            <p>Mãos que Ajudam</p>
+        </div>
+        
+        <!-- Tela 1: Seleção do tipo de doação -->
+        <div class="content" id="screen1">
+            <div class="section">
+                <div class="section-title">Selecione o tipo de doação</div>
+                <div class="donation-types">
+                    <div class="donation-type active" data-type="financeira">Financeira</div>
+                    <div class="donation-type" data-type="alimentos">Alimentos</div>
+                    <div class="donation-type" data-type="roupas">Roupas</div>
+                </div>
+            </div>
+            
+            <!-- Conteúdo para Doação Financeira -->
+            <div class="donation-content" id="financeira-content">
+                <div class="section">
+                    <div class="section-title">Valor da doação</div>
+                    <div class="donation-value">
+                        <div class="value-display">R$ 00</div>
+                        <div class="value-options">
+                            <div class="value-option">R$ 20</div>
+                            <div class="value-option active">R$ 50</div>
+                            <div class="value-option">R$ 100</div>
+                        </div>
+                        <div class="other-value">Outro valor</div>
+                        <input type="text" class="custom-value-input" placeholder="R$ 0,00" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Forma de pagamento</div>
+                    <div class="payment-methods">
+                        <div class="payment-method active" data-method="pix">PIX</div>
+                        <div class="payment-method" data-method="credit">Cartão de Crédito</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Resumo da Doação</div>
+                    <div class="summary">
+                        <div class="summary-title">Valor da doação:</div>
+                        <div class="summary-value">R$ 50,00</div>
+                    </div>
+                </div>
+                
+                <button class="confirm-button" id="confirm-financeira">Confirmar Doação</button>
+            </div>
+            
+            <!-- Conteúdo para Doação de Alimentos -->
+            <div class="donation-content" id="alimentos-content" style="display: none;">
+                <div class="section">
+                    <div class="section-title">Tipo de Alimento</div>
+                    <div class="food-types">
+                        <div class="food-type active">Não perecível</div>
+                        <div class="food-type">Perecível</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Quantidade</div>
+                    <input type="text" class="text-input" placeholder="Ex: 5 kg de arroz, 2L de leite">
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Condições Especiais (opcional)</div>
+                    <input type="text" class="text-input" placeholder="Ex: Sem glúten, validade próxima, etc.">
+                </div>
+                
+                <div class="section">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="safety-guidelines">
+                        <label for="safety-guidelines">Diretrizes de Segurança e Higiene</label>
+                    </div>
+                    <div class="guidelines">
+                        <p>• Verifique a data de validade dos produtos.</p>
+                        <p>• Embalagens devem estar lacradas e em bom estado.</p>
+                        <p>• Produtos frescos devem estar em condições adequadas para consumo.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Como entregar?</div>
+                    <div class="delivery-options">
+                        <div class="delivery-option active">Agendar Coleta</div>
+                        <div class="delivery-option">Ver Pontos de Coleta</div>
+                    </div>
+                </div>
+                
+                <button class="confirm-button" id="confirm-alimentos">Confirmar Doação</button>
+            </div>
+            
+            <!-- Conteúdo para Doação de Roupas -->
+            <div class="donation-content" id="roupas-content" style="display: none;">
+                <div class="section">
+                    <p style="text-align: center; color: #666; padding: 20px;">
+                        Funcionalidade em desenvolvimento. Em breve você poderá doar roupas através do nosso sistema.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="terms">
+                Ao confirmar, você concorda com nossos Termos de Serviço.
+            </div>
+        </div>
+        
+        <!-- Tela 2: Detalhes do Pagamento (Financeira) -->
+        <div class="content" id="screen2" style="display: none;">
+            <div class="step-indicator">
+                Passo 1 de 2
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Detalhes da sua Doação Financeira</div>
+                
+                <div class="donation-value">
+                    <div class="value-display">R$ 50,00</div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Forma de pagamento</div>
+                    <div class="payment-methods">
+                        <div class="payment-method active" data-method="pix">PIX</div>
+                        <div class="payment-method" data-method="credit">Cartão de Crédito</div>
+                    </div>
+                </div>
+                
+                <!-- Conteúdo PIX -->
+                <div class="payment-content" id="pix-content">
+                    <div class="section">
+                        <p>Escaneie o QR Code abaixo com o app do seu banco para pagar:</p>
+                        <div class="qr-code-placeholder">
+                            [QR CODE AQUI]
+                        </div>
+                        <button class="pix-button">Copiar Chave PIX</button>
+                    </div>
+                </div>
+                
+                <!-- Conteúdo Cartão de Crédito -->
+                <div class="payment-content" id="credit-content" style="display: none;">
+                    <div class="section">
+                        <div class="form-group">
+                            <label>Número do Cartão</label>
+                            <input type="text" class="text-input" placeholder="0000 0000 0000 0000">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Validade</label>
+                                <input type="text" class="text-input" placeholder="MM/AA">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" class="text-input" placeholder="123">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Nome no Cartão</label>
+                            <input type="text" class="text-input" placeholder="Seu nome completo">
+                        </div>
+                        <div class="form-group">
+                            <label>CPF do Titular</label>
+                            <input type="text" class="text-input" placeholder="000.000.000-00">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Resumo da Doação</div>
+                    <div class="summary">
+                        <div class="summary-title">Valor da doação:</div>
+                        <div class="summary-value">R$ 50,00</div>
+                    </div>
+                </div>
+                
+                <button class="confirm-button" id="finalizar-doacao">Finalizar Doação</button>
+                
+                <div class="security-notice">
+                    <p>✓ Pagamento seguro. Seus dados estão protegidos.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tela 3: Confirmação de Alimentos -->
+        <div class="content" id="screen3" style="display: none;">
+            <div class="section">
+                <div class="success-message">
+                    <h2>Doação Confirmada!</h2>
+                    <p>Obrigado por sua doação de alimentos.</p>
+                    <p>Em breve entraremos em contato para combinar os detalhes da coleta.</p>
+                </div>
+            </div>
+            
+            <button class="confirm-button" id="voltar-inicio">Voltar ao Início</button>
+        </div>
+    </div>
+
+    <script src="teste.js"></script>
+</body>
+</html>
