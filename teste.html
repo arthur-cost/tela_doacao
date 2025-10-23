@@ -1,211 +1,243 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doação - Mãos que Ajudam</title>
-    <link rel="stylesheet" href="teste.css">
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Você está doando para</h1>
-            <p>Mãos que Ajudam</p>
-        </div>
-        
-        <!-- Tela 1: Seleção do tipo de doação -->
-        <div class="content" id="screen1">
-            <div class="section">
-                <div class="section-title">Selecione o tipo de doação</div>
-                <div class="donation-types">
-                    <div class="donation-type active" data-type="financeira">Financeira</div>
-                    <div class="donation-type" data-type="alimentos">Alimentos</div>
-                    <div class="donation-type" data-type="roupas">Roupas</div>
+
+<div class="donation-container">
+    <div class="header">
+        <h1>Você está doando para</h1>
+        <p>Mãos que Ajudam</p>
+    </div>
+
+    <div class="content" *ngIf="currentScreen === 'screen1'">
+        <div class="section">
+            <div class="section-title">Selecione o tipo de doação</div>
+            <div class="donation-types">
+                <div class="donation-type" [class.active]="currentDonationType === 'financeira'"
+                    (click)="selectDonationType('financeira')">
+                    Financeira
                 </div>
-            </div>
-            
-            <!-- Conteúdo para Doação Financeira -->
-            <div class="donation-content" id="financeira-content">
-                <div class="section">
-                    <div class="section-title">Valor da doação</div>
-                    <div class="donation-value">
-                        <div class="value-display">R$ 00</div>
-                        <div class="value-options">
-                            <div class="value-option">R$ 20</div>
-                            <div class="value-option active">R$ 50</div>
-                            <div class="value-option">R$ 100</div>
-                        </div>
-                        <div class="other-value">Outro valor</div>
-                        <input type="text" class="custom-value-input" placeholder="R$ 0,00" style="display: none;">
-                    </div>
+                <div class="donation-type" [class.active]="currentDonationType === 'alimentos'"
+                    (click)="selectDonationType('alimentos')">
+                    Alimentos
                 </div>
-                
-                <div class="section">
-                    <div class="section-title">Forma de pagamento</div>
-                    <div class="payment-methods">
-                        <div class="payment-method active" data-method="pix">PIX</div>
-                        <div class="payment-method" data-method="credit">Cartão de Crédito</div>
-                    </div>
+                <div class="donation-type" [class.active]="currentDonationType === 'roupas'"
+                    (click)="selectDonationType('roupas')">
+                    Roupas
                 </div>
-                
-                <div class="section">
-                    <div class="section-title">Resumo da Doação</div>
-                    <div class="summary">
-                        <div class="summary-title">Valor da doação:</div>
-                        <div class="summary-value">R$ 50,00</div>
-                    </div>
-                </div>
-                
-                <button class="confirm-button" id="confirm-financeira">Confirmar Doação</button>
-            </div>
-            
-            <!-- Conteúdo para Doação de Alimentos -->
-            <div class="donation-content" id="alimentos-content" style="display: none;">
-                <div class="section">
-                    <div class="section-title">Tipo de Alimento</div>
-                    <div class="food-types">
-                        <div class="food-type active">Não perecível</div>
-                        <div class="food-type">Perecível</div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-title">Quantidade</div>
-                    <input type="text" class="text-input" placeholder="Ex: 5 kg de arroz, 2L de leite">
-                </div>
-                
-                <div class="section">
-                    <div class="section-title">Condições Especiais (opcional)</div>
-                    <input type="text" class="text-input" placeholder="Ex: Sem glúten, validade próxima, etc.">
-                </div>
-                
-                <div class="section">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="safety-guidelines">
-                        <label for="safety-guidelines">Diretrizes de Segurança e Higiene</label>
-                    </div>
-                    <div class="guidelines">
-                        <p>• Verifique a data de validade dos produtos.</p>
-                        <p>• Embalagens devem estar lacradas e em bom estado.</p>
-                        <p>• Produtos frescos devem estar em condições adequadas para consumo.</p>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-title">Como entregar?</div>
-                    <div class="delivery-options">
-                        <div class="delivery-option active">Agendar Coleta</div>
-                        <div class="delivery-option">Ver Pontos de Coleta</div>
-                    </div>
-                </div>
-                
-                <button class="confirm-button" id="confirm-alimentos">Confirmar Doação</button>
-            </div>
-            
-            <!-- Conteúdo para Doação de Roupas -->
-            <div class="donation-content" id="roupas-content" style="display: none;">
-                <div class="section">
-                    <p style="text-align: center; color: #666; padding: 20px;">
-                        Funcionalidade em desenvolvimento. Em breve você poderá doar roupas através do nosso sistema.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="terms">
-                Ao confirmar, você concorda com nossos Termos de Serviço.
             </div>
         </div>
-        
-        <!-- Tela 2: Detalhes do Pagamento (Financeira) -->
-        <div class="content" id="screen2" style="display: none;">
-            <div class="step-indicator">
-                Passo 1 de 2
-            </div>
-            
+
+        <div class="donation-content" *ngIf="currentDonationType === 'financeira'">
             <div class="section">
-                <div class="section-title">Detalhes da sua Doação Financeira</div>
-                
+                <div class="section-title">Valor da doação</div>
                 <div class="donation-value">
-                    <div class="value-display">R$ 50,00</div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-title">Forma de pagamento</div>
-                    <div class="payment-methods">
-                        <div class="payment-method active" data-method="pix">PIX</div>
-                        <div class="payment-method" data-method="credit">Cartão de Crédito</div>
-                    </div>
-                </div>
-                
-                <!-- Conteúdo PIX -->
-                <div class="payment-content" id="pix-content">
-                    <div class="section">
-                        <p>Escaneie o QR Code abaixo com o app do seu banco para pagar:</p>
-                        <div class="qr-code-placeholder">
-                            [QR CODE AQUI]
+                    <div class="value-display">R$ {{ formatForDisplay(currentValue) }}</div>
+                    <div class="value-options">
+                        <div class="value-option" [class.active]="currentValue === '20'" (click)="selectValue('20')">
+                            R$ 20
                         </div>
-                        <button class="pix-button">Copiar Chave PIX</button>
-                    </div>
-                </div>
-                
-                <!-- Conteúdo Cartão de Crédito -->
-                <div class="payment-content" id="credit-content" style="display: none;">
-                    <div class="section">
-                        <div class="form-group">
-                            <label>Número do Cartão</label>
-                            <input type="text" class="text-input" placeholder="0000 0000 0000 0000">
+                        <div class="value-option" [class.active]="currentValue === '50'" (click)="selectValue('50')">
+                            R$ 50
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Validade</label>
-                                <input type="text" class="text-input" placeholder="MM/AA">
-                            </div>
-                            <div class="form-group">
-                                <label>CVV</label>
-                                <input type="text" class="text-input" placeholder="123">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Nome no Cartão</label>
-                            <input type="text" class="text-input" placeholder="Seu nome completo">
-                        </div>
-                        <div class="form-group">
-                            <label>CPF do Titular</label>
-                            <input type="text" class="text-input" placeholder="000.000.000-00">
+                        <div class="value-option" [class.active]="currentValue === '100'" (click)="selectValue('100')">
+                            R$ 100
                         </div>
                     </div>
+                    <div class="other-value" *ngIf="!showCustomValue" (click)="showCustomValueInput()">
+                        Outro valor
+                    </div>
+                    <input type="text" class="custom-value-input" placeholder="R$ 0,00" *ngIf="showCustomValue"
+                        [(ngModel)]="customValue" (input)="onCustomValueInput()" (blur)="onCustomValueBlur()"
+                        (focus)="onCustomValueFocus()">
                 </div>
-                
-                <div class="section">
-                    <div class="section-title">Resumo da Doação</div>
-                    <div class="summary">
-                        <div class="summary-title">Valor da doação:</div>
-                        <div class="summary-value">R$ 50,00</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Forma de pagamento</div>
+                <div class="payment-methods">
+                    <div class="payment-method" [class.active]="currentPaymentMethod === 'pix'"
+                        (click)="selectPaymentMethod('pix')">
+                        PIX
+                    </div>
+                    <div class="payment-method" [class.active]="currentPaymentMethod === 'credit'"
+                        (click)="selectPaymentMethod('credit')">
+                        Cartão de Crédito
                     </div>
                 </div>
-                
-                <button class="confirm-button" id="finalizar-doacao">Finalizar Doação</button>
-                
-                <div class="security-notice">
-                    <p>✓ Pagamento seguro. Seus dados estão protegidos.</p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Resumo da Doação</div>
+                <div class="summary">
+                    <div class="summary-title">Valor da doação:</div>
+                    <div class="summary-value">R$ {{ formatForDisplay(currentValue) }}</div>
                 </div>
+            </div>
+
+            <button class="confirm-button" (click)="confirmFinancialDonation()">Confirmar Doação</button>
+        </div>
+
+        <div class="donation-content" *ngIf="currentDonationType === 'alimentos'">
+            <div class="section">
+                <div class="section-title">Tipo de Alimento</div>
+                <div class="food-types">
+                    <div class="food-type" [class.active]="foodType === 'nao-perecivel'"
+                        (click)="selectFoodType('nao-perecivel')">
+                        Não perecível
+                    </div>
+                    <div class="food-type" [class.active]="foodType === 'perecivel'"
+                        (click)="selectFoodType('perecivel')">
+                        Perecível
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Quantidade</div>
+                <input type="text" class="text-input" placeholder="Ex: 5 kg de arroz, 2L de leite"
+                    [(ngModel)]="foodQuantity">
+            </div>
+
+            <div class="section">
+                <div class="section-title">Condições Especiais (opcional)</div>
+                <input type="text" class="text-input" placeholder="Ex: Sem glúten, validade próxima, etc."
+                    [(ngModel)]="specialConditions">
+            </div>
+
+            <div class="section">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="safety-guidelines" [(ngModel)]="safetyGuidelinesAccepted">
+                    <label for="safety-guidelines">Diretrizes de Segurança e Higiene</label>
+                </div>
+                <div class="guidelines">
+                    <p>• Verifique a data de validade dos produtos.</p>
+                    <p>• Embalagens devem estar lacradas e em bom estado.</p>
+                    <p>• Produtos frescos devem estar em condições adequadas para consumo.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Como entregar?</div>
+                <div class="delivery-options">
+                    <div class="delivery-option" [class.active]="deliveryOption === 'coleta'"
+                        (click)="selectDeliveryOption('coleta')">
+                        Agendar Coleta
+                    </div>
+                    <div class="delivery-option" [class.active]="deliveryOption === 'pontos'"
+                        (click)="selectDeliveryOption('pontos')">
+                        Ver Pontos de Coleta
+                    </div>
+                </div>
+            </div>
+
+            <button class="confirm-button" (click)="confirmFoodDonation()">Confirmar Doação</button>
+        </div>
+
+        <div class="donation-content" *ngIf="currentDonationType === 'roupas'">
+            <div class="section">
+                <p style="text-align: center; color: #666; padding: 20px;">
+                    Funcionalidade em desenvolvimento. Em breve você poderá doar roupas através do nosso sistema.
+                </p>
             </div>
         </div>
-        
-        <!-- Tela 3: Confirmação de Alimentos -->
-        <div class="content" id="screen3" style="display: none;">
-            <div class="section">
-                <div class="success-message">
-                    <h2>Doação Confirmada!</h2>
-                    <p>Obrigado por sua doação de alimentos.</p>
-                    <p>Em breve entraremos em contato para combinar os detalhes da coleta.</p>
-                </div>
-            </div>
-            
-            <button class="confirm-button" id="voltar-inicio">Voltar ao Início</button>
+
+        <div class="terms">
+            Ao confirmar, você concorda com nossos Termos de Serviço.
         </div>
     </div>
 
-    <script src="teste.js"></script>
-</body>
-</html>
+    <div class="content" *ngIf="currentScreen === 'screen2'">
+        <div class="step-indicator">
+            Passo 1 de 2
+        </div>
+
+        <div class="section">
+            <div class="section-title">Detalhes da sua Doação Financeira</div>
+
+            <div class="donation-value">
+                <div class="value-display">R$ {{ formatForDisplay(currentValue) }}</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Forma de pagamento</div>
+                <div class="payment-methods">
+                    <div class="payment-method" [class.active]="currentPaymentMethod === 'pix'"
+                        (click)="selectPaymentMethod('pix')">
+                        PIX
+                    </div>
+                    <div class="payment-method" [class.active]="currentPaymentMethod === 'credit'"
+                        (click)="selectPaymentMethod('credit')">
+                        Cartão de Crédito
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-content" *ngIf="currentPaymentMethod === 'pix'">
+                <div class="section">
+                    <p>Escaneie o QR Code abaixo com o app do seu banco para pagar:</p>
+                    <div class="qr-code-placeholder">
+                        [QR CODE AQUI]
+                         <!-- PARA MATHEUS -->
+                    </div>
+                    <button class="pix-button">Copiar Chave PIX</button>
+                         <!-- PARA MATHEUS -->
+                </div>
+            </div>
+
+            <div class="payment-content" *ngIf="currentPaymentMethod === 'credit'">
+                <div class="section">
+                    <div class="form-group">
+                        <label>Número do Cartão</label>
+                        <input type="text" class="text-input" placeholder="0000 0000 0000 0000" [(ngModel)]="cardNumber"
+                            (input)="formatCardNumber()" maxlength="19">
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Validade</label>
+                            <input type="text" class="text-input" placeholder="MM/AA" [(ngModel)]="cardExpiry"
+                                (input)="formatCardExpiry()" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" class="text-input" placeholder="123" [(ngModel)]="cardCvv"
+                                (input)="formatCardCvv()" maxlength="4">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome no Cartão</label>
+                        <input type="text" class="text-input" placeholder="Seu nome completo" [(ngModel)]="cardName">
+                    </div>
+                    <div class="form-group">
+                        <label>CPF do Titular</label>
+                        <input type="text" class="text-input" placeholder="000.000.000-00" [(ngModel)]="cardCpf"
+                            (input)="formatCpf()" maxlength="14">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Resumo da Doação</div>
+                <div class="summary">
+                    <div class="summary-title">Valor da doação:</div>
+                    <div class="summary-value">R$ {{ formatForDisplay(currentValue) }}</div>
+                </div>
+            </div>
+
+            <button class="confirm-button" (click)="finalizeDonation()">Finalizar Doação</button>
+
+            <div class="security-notice">
+                <p>✓ Pagamento seguro. Seus dados estão protegidos.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" *ngIf="currentScreen === 'screen3'">
+        <div class="section">
+            <div class="success-message">
+                <h2>Doação Confirmada!</h2>
+                <p>Obrigado por sua doação de alimentos.</p>
+                <p>Em breve entraremos em contato para combinar os detalhes da coleta.</p>
+            </div>
+        </div>
+
+        <button class="confirm-button" (click)="backToStart()">Voltar ao Início</button>
+    </div>
+</div>
